@@ -1,0 +1,2 @@
+altura = 632
+largura = 700
