@@ -1,12 +1,7 @@
 # Pacman
 
-Projeto dos alunos de engenharia de computação da Universidade Tecnologica Federal do Paraná:<br>
--Lucas Vale <br>
--Gustavo Pereira<br>
+Pacman developed in cpp with the assistance of the SDL 2d library.
 
-Descrição do projeto:<br>
-Desenvolver o jogo classico de Pacman, utilizando C++ e a biblioteca SDL2.<br>
-Objetivo principal é fazer com que o jogo funcione de maneira coerente em qualquer computador.
+The ghosts AI works always searching the shortest way possible with the Dijkstra algorithm.
 
-
-
+Youtube video: https://youtu.be/00J4M_68LLE
