@@ -15,8 +15,13 @@ class Ambiente
 
 		void imprime(SDL_Renderer** render);
 		void setPacman(int x, int y);
+		void setFantasma(int x, int y);
+		void setFantasmaComida(int x, int y);
 		void setVazio(int x, int y);
+		void setComida(int x, int y);
 		void setPortal(int x, int y);
+		void setComidaGrande(int x, int y);
+		void setFantasmaComidaG(int x, int y);
 		void setPacPortal(int x, int y);
 		int getPosicao(int x, int y);
 		void getPortais(int* x1, int* y1, int* x2, int* y2);

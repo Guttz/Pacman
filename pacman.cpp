@@ -6,6 +6,7 @@ Pacman::Pacman(int x, int y)
 	pontuacao = 0;
 	posicaoX = x;
 	posicaoY = y;
+	somComidaPequena = Mix_LoadWAV( "Sons/comida_pequena.wav" );
 
 }
 
@@ -34,7 +35,7 @@ void Pacman::mover(Ambiente* mapa, SDL_Event* e)
 		//printf("CIMA\n");
 	}
 	
-	
+
 	if(ultimoSentido == ESQUERDA)
 	{	
 		evento((*mapa).getPosicao(posicaoX, posicaoY-1));
@@ -73,7 +74,7 @@ void Pacman::mover(Ambiente* mapa, SDL_Event* e)
 				posicaoX = x2;
 				posicaoY = y2;
 			}
-			
+
 		}
 		else
 		{
@@ -497,7 +498,14 @@ void Pacman::evento(int valor)
 	if(valor == 2)
 	{
 		pontuacao += 10;
+		
+		if(SDL_GetTicks() - intervaloDeSomComidaPequena > 600)
+		{
+			Mix_PlayChannel( -1, somComidaPequena, 0 );
+			intervaloDeSomComidaPequena = SDL_GetTicks();
+		}
 	}
+
 	if(valor == 3)
 	{
 		pontuacao += 50;
@@ -509,4 +517,21 @@ void Pacman::evento(int valor)
 		//Void
 	}
 
+}
+
+int Pacman::getX()
+{
+	return this->posicaoX;
+}
+int Pacman::getY()
+{
+	return this->posicaoY;
+}
+void Pacman::setX(int x)
+{
+	this->posicaoX = x;
+}
+void Pacman::setY(int y)
+{
+	this->posicaoY = y;
 }

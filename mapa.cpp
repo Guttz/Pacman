@@ -1,4 +1,5 @@
 #include "mapa.h"
+#include "textura.h"
 #include <stdlib.h>
 Ambiente::Ambiente()
 {
@@ -20,9 +21,6 @@ Ambiente::Ambiente()
 
 	restoalturaSQM = a/31 - (int) a/31;
 	restolarguraSQM = l/28 - (int)l/28;
-
-	//printf("%Lf, %Lf \n", alturaSQM, restoalturaSQM );
-	//printf("%Lf, %Lf \n", larguraSQM, restolarguraSQM );
 	
 
 	fstream fs2("mapa.txt", fstream::in);
@@ -56,7 +54,6 @@ Ambiente::Ambiente()
 			}
 		}
 
-
 }
 
 void Ambiente::imprime(SDL_Renderer** render)
@@ -78,41 +75,11 @@ void Ambiente::imprime(SDL_Renderer** render)
 			sqm.h = (int)alturaSQM + 1;
 			sqm.w = (int)larguraSQM+ 1;
 
-/*			if(restolarguraSQMAcumulado + k*restolarguraSQM >= 1)
-			{
-				restolarguraSQMAcumulado = restolarguraSQMAcumulado + k*larguraSQM;
-				k = 0;
-			}
-
-			if( restolarguraSQMAcumulado >= 1)
-			{
-				sqm.x = (int)j*larguraSQM - 1;
-				sqm.w = (int)larguraSQM + 1;
-				restolarguraSQMAcumulado = restolarguraSQMAcumulado - 1;	
-			}
-
-			else
-			{
-				sqm.x = (int)j*larguraSQM;
-				sqm.w = (int)larguraSQM;
-			}
-
-			if(restoalturaSQMAcumulado >= 1){
-				sqm.y = (int)i*alturaSQM - 1;
-				sqm.h = (int)alturaSQM + 1;	
-			}
-
-			else
-			{
-				sqm.y = (int)i*alturaSQM;	
-				sqm.h = (int)alturaSQM;
-			}
-*/
-
 			if(matriz[i][j] == PACMAN )
 			{	
-				cout << "divPacman:" << divisorDeSQM ;
+				
 				divisorDeSQM++;
+				// -  (int)(larguraSQM*divisorDeSQM/4)
 				for(int iAlt = 0; iAlt < alturaSQM; iAlt++)
 					for(int jLarg = 0; jLarg < larguraSQM; jLarg++)
 				{
@@ -129,7 +96,7 @@ void Ambiente::imprime(SDL_Renderer** render)
 					}
 				}	
 
-				if (divisorDeSQM == 4)
+				if (divisorDeSQM == 3)
 				{
 					divisorDeSQM = 0;
 				}
@@ -139,6 +106,7 @@ void Ambiente::imprime(SDL_Renderer** render)
 			//Determinando o que será impresso no sqm
 			else if(matriz[i][j] == PAREDE)
 			{
+
 				//Imprimir quadrado azul
 				SDL_SetRenderDrawColor( *render, 0, 0, 255, 0xFF );
 				SDL_RenderFillRect(*render, &sqm);
@@ -155,52 +123,6 @@ void Ambiente::imprime(SDL_Renderer** render)
 					matrizAux[k][0] = matriz[k-1][-1];
 					matrizAux[k][LARGURA+1] = matriz[k-1][LARGURA];
 				}*/
-
-/*				if(matrizAux[i-1+1][j+1] == PAREDE)
-					sqm.y = sqm.y;
-				else
-					sqm.y = sqm.y + 4;
-
-				if(matrizAux[i+1][j-1+1] == PAREDE)
-					sqm.x = sqm.x;
-				else
-					sqm.x = sqm.x + 4;
-
-				if(matrizAux[i+1][j+1+1] == PAREDE)
-					sqm.w = sqm.w;
-				else
-					sqm.w = sqm.w - 4;
-
-				if(matrizAux[i+1+1][j+1] == PAREDE) 
-					sqm.h = sqm.y;
-				else
-					sqm.y = sqm.y -4;
-
-				SDL_SetRenderDrawColor( *render, 0, 0, 0, 0xFF );
-				SDL_RenderFillRect(*render, &sqm);
-
-				if(matrizAux[i-1+1][j+1] == PAREDE)
-					sqm.y = sqm.y;
-				else
-					sqm.y = sqm.y + 8;
-
-				if(matrizAux[i+1][j-1+1] == PAREDE)
-					sqm.x = sqm.x;
-				else
-					sqm.x = sqm.x + 8;
-
-				if(matrizAux[i+1][j+1+1] == PAREDE)
-					sqm.w = sqm.w;
-				else
-					sqm.w = sqm.w - 8;
-
-				if(matrizAux[i+1+1][j+1] == PAREDE) 
-					sqm.h = sqm.y;
-				else
-					sqm.y = sqm.y -8;
-
-				SDL_SetRenderDrawColor( *render, 0, 0, 0, 0xFF );
-				SDL_RenderFillRect(*render, &sqm);*/
 
 				if(i!=0)
 				{
@@ -230,12 +152,73 @@ void Ambiente::imprime(SDL_Renderer** render)
 				}
 				else{
 					if( matrizAux[i-1+1][j+1] != PAREDE || matrizAux[i+1][j-1+1] != PAREDE ||  matrizAux[i+1][j+1+1] != PAREDE || matrizAux[i+1+1][j+1] != PAREDE)
-						sqm.h = sqm.h -2;
+						sqm.h = sqm.h -4; 
 
 					SDL_SetRenderDrawColor( *render, 0, 0, 0, 0xFF );
 					SDL_RenderFillRect(*render, &sqm);
 				}
-			}
+
+				if(matrizAux[i-1+1][j+1] == PAREDE)
+					sqm.y = sqm.y;
+				else
+					sqm.y = sqm.y + 4;
+
+				if(matrizAux[i+1][j-1+1] == PAREDE)
+					sqm.x = sqm.x;
+				else
+					sqm.x = sqm.x + 4;
+
+				if(matrizAux[i+1][j+1+1] == PAREDE)
+					sqm.w = sqm.w;
+				else
+					sqm.w = sqm.w - 4;
+
+				if(matrizAux[i+1+1][j+1] == PAREDE) 
+					sqm.h = sqm.y;
+				else
+					sqm.y = sqm.y -4;
+
+				SDL_SetRenderDrawColor( *render, 0, 0, 255, 0xFF );
+				SDL_RenderFillRect(*render, &sqm);
+
+				if(matrizAux[i-1+1][j+1] == PAREDE)
+					sqm.y = sqm.y;
+				else
+					sqm.y = sqm.y + 2;
+
+				if(matrizAux[i+1][j-1+1] == PAREDE)
+					sqm.x = sqm.x;
+				else
+					sqm.x = sqm.x + 2;
+
+				if(matrizAux[i+1][j+1+1] == PAREDE)
+					sqm.w = sqm.w;
+				else
+					sqm.w = sqm.w - 2;
+
+				if(matrizAux[i+1+1][j+1] == PAREDE) 
+					sqm.h = sqm.y;
+				else
+					sqm.y = sqm.y -2;
+
+				SDL_SetRenderDrawColor( *render, 0, 0, 0, 0xFF );
+				SDL_RenderFillRect(*render, &sqm);
+
+				SDL_SetRenderDrawColor( *render, 0x00, 0x00, 0xFF, 0xFF );  
+				
+				if(i==ALTURA-1 && j == LARGURA-1)
+				{
+					for(int contadora = 0; contadora<4; contadora++)
+					{
+						SDL_RenderDrawLine( *render, contadora, 0, contadora, alturaSQM*(i+1));
+						SDL_RenderDrawLine( *render, 0, alturaSQM*ALTURA-contadora-1, larguraSQM*LARGURA, alturaSQM*ALTURA-contadora-1);
+						SDL_RenderDrawLine( *render, larguraSQM*LARGURA-contadora-1, 0, larguraSQM*LARGURA-contadora-1, alturaSQM*ALTURA);
+						SDL_RenderDrawLine( *render, 0, contadora, larguraSQM*ALTURA, contadora);
+                
+					}
+                }
+
+		}
 			else if(matriz[i][j] == COMIDAP)
 			{
 				for(int iAlt = 0; iAlt < alturaSQM; iAlt++)
@@ -252,7 +235,7 @@ void Ambiente::imprime(SDL_Renderer** render)
 						SDL_SetRenderDrawColor( *render, 0, 0, 0, 0xFF );
 						SDL_RenderFillRect(*render, &pixel);
 					}
-				}
+				}	
 
 			}
 			else if(matriz[i][j] == COMIDAG)
@@ -302,6 +285,21 @@ void Ambiente::imprime(SDL_Renderer** render)
 				SDL_SetRenderDrawColor( *render, 250, 250, 100, 0xFF );
 				SDL_RenderFillRect(*render, &sqm);
 			}
+			else if(matriz[i][j] == FANTASMA || matriz[i][j] == COMIDAF || matriz[i][j] == COMIDAGF )
+			{
+				//Imprimindo um fantasma retangular
+				//SDL_SetRenderDrawColor( *render, 240, 200, 100, 0xFF );
+				//SDL_RenderFillRect(*render, &sqm);
+				//Imprimindo o portal rosa
+				SDL_SetRenderDrawColor( *render, 0, 0, 0, 0xFF );
+				SDL_RenderFillRect(*render, &sqm);
+				SDL_Color cor = {0,255,0,255};
+				Textura fantasminha;
+				TTF_Font* font = TTF_OpenFont( "Fontes/titulo.ttf", 32 );
+				fantasminha.carregarTexto("9", cor, *render, font);
+				fantasminha.renderizar(sqm.x,sqm.y, *render);
+
+			}
 
 		}
 		if( restoalturaSQMAcumulado >= 1)
@@ -314,6 +312,28 @@ void Ambiente::setPacman(int x, int y)
 {
 	matriz[x][y] = PACMAN;
 }
+void Ambiente::setComida(int x, int y)
+{
+	matriz[x][y] = COMIDAP;
+}
+void Ambiente::setComidaGrande(int x, int y)
+{
+	matriz[x][y] = COMIDAG;
+}
+void Ambiente::setFantasma(int x, int y)
+{
+	matriz[x][y] = FANTASMA;
+}
+void Ambiente::setFantasmaComida(int x, int y)
+{
+	matriz[x][y] = COMIDAF;
+}
+
+void Ambiente::setFantasmaComidaG(int x, int y)
+{
+	matriz[x][y] = COMIDAGF;
+}
+
 void Ambiente::setPacPortal(int x, int y)
 {
 	matriz[x][y] = PACPORTAL;

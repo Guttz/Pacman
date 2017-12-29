@@ -1,4 +1,4 @@
-OBJS = main.cpp inicializacao.cpp textura.cpp mapa.cpp pacman.cpp
+OBJS = main.cpp inicializacao.cpp textura.cpp mapa.cpp pacman.cpp arestas.cpp vertices.cpp fantasma.cpp
 
 CC = g++
 

@@ -21,6 +21,9 @@
 #define PACMAN 6
 #define PORTAL 7
 #define PACPORTAL 8
+#define FANTASMA 9
+#define COMIDAF 10
+#define COMIDAGF 11
 
 #define ALTURA 31
 #define LARGURA 28

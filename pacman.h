@@ -17,8 +17,12 @@ class Pacman
 		Pacman(int x, int y);
 		void mover(Ambiente* mapa, SDL_Event* e);
 		void evento(int valor);
+		int getX();
+		int getY();
+		void setX(int x);
+		void setY(int y);
 	private:
-
+		Mix_Chunk *somComidaPequena;
 		int ultimoSentido;
 		int posicaoX;
 		int posicaoY;
@@ -26,6 +30,7 @@ class Pacman
 		int tempoDeForca;
 		int pontuacao;
 		int vidas;
+		Uint32 intervaloDeSomComidaPequena;
 };
 
 #endif /* pacman_H */
